@@ -59,7 +59,7 @@ const home = require("./src/routes/home");
 app.set("views", "./src/views");
 //생성도니 html 코드를 어떤 엔진으로 해석할지 정할 수 있음
 app.set("view engine", "ejs");
-
+app.use(express.static('${__dirname}/src/public'))
 //router 받아오기
 app.use("/", home); //use -> 미들 웨어를 등록해주는 메서드
 
