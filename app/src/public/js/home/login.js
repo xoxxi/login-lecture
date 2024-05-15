@@ -1,31 +1,36 @@
-"use strict"
+"use strict";
+
+"use strict";
 
 
+const id = document.querySelector("#id");
+const password = document.querySelector("#password");
+console.log(id); // id 요소가 제대로 선택되었는지 확인
+console.log(password); // password 요소가 제대로 선택되었는지 확인
 
-const id = document.querySelector("#id")
-const psword = document.querySelector("#psword");
-const loginbtn = document.querySelector("button");
+const loginBtn = document.querySelector("button");
 
-loginbtn.addEventListener("click", login);
+loginBtn.addEventListener("click", login);
 
-function login(){
+function login() {
     const req = {
         id: id.value,
-        psword: psword.value
-    };
+        password: password.value
+        }
 
     fetch("/login", {
         method: "POST",
-        headers:{
-            "Content-Type" : "application/json" //내가 보내는 데이터의 타입을 알려줌
-        }, //내가 전달하는 데이터가 json 데이터라는 것을 알려주어야 함
-        body: JSON.stringify(req), //문자열로 감쌀 수 있음
-
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(req),
     })
+    .then((res) => res.json())
+    .then((res) => {
+        console.log(res)});
 }
+
 //오브젝트로 전달할 떄는 : 씀
-console.log(id);
-console.log("heelo");
 
 //질의선택자 선택자로 html의 값을 가져올 수있음
 //login.ejs 파일에 있는 tag들에 있는 정보 = 선택자 

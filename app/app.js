@@ -1,66 +1,79 @@
-// const express = require('express')
-// const app = express()
-// const port = 3000
 
-
-// app.get('/', (req, res) => {
-//   res.send('Hello World')
-// })
-
-// app.get('/user/:id', (req, res) => {
-//     // const q = req.params
-//     // console.log(q.id)
-
-//     // const q = req.query
-//     // console.log(q.q)
-//     // console.log(q.name)
-//     // console.log(q.age)
-
-//     // res.json({'userid' : q.name})
-
-//     const p = req.params;
-//     console.log(p);
-//     const b = req.body;
-//     console.log(b);
-    
-//     res.send({'message' : 'Hello World!'});
-// })
-
-// app.get('/sound/:name', (req, res) => {
-//     const {name} = req.params  
-    
-//     if(name == 'dog'){
-//         res.json({'sound' : '멍멍'})
-//     } else if(name == 'cat'){
-//         res.json({"sound" : '먀-악!!!!!'})
-//     } else if(name == 'pig'){
-//         res.json({"sound" : '꿀꿀'})
-//     } else{
-//         res.json({"sound" : '알 수 없음'})
-//     }
-    
-//     res.json({'sound' : 'didh'})
-// })
-
-// app.listen(port, () => {
-//     console.log('Example app listening on port $(port)')
-// })
 
 //모듈
+//import express from "express";
+//import cors from "cors";
+//import path, {dirname} from 'path';
+//import { fileURLToPath } from "url";
+//import bodyParser from "body-parser";
+
 const express = require("express");
+const bodyParser = require("body-parser")
 const app = express();
+const PORT = 3000;
 
 
 
 //라우팅
-const home = require("./src/routes/home");
+const home = require("./src/routes/home/index.js");
 
 // 앱세팅 
 app.set("views", "./src/views");
+
 //생성도니 html 코드를 어떤 엔진으로 해석할지 정할 수 있음
 app.set("view engine", "ejs");
-app.use(express.static('${__dirname}/src/public'))
+
+//import path, {dirname} from 'path';
+//import { fileURLToPath } from "url";
+
+//const dirname = dirname(fileURLToPath(import.meta.url));
+
+//app.use('/js', express.static(path.join(dirname, '/src/public/js')));
+app.use('/js', express.static(`${__dirname}/src/public/js/home`));app.use(express.static(`${__dirname}/src/public`))
+//app.use(express.static(__dirname + '/public'));
+
+//import path, {dirname} from 'path';
+//import { fileURLToPath } from "url";
+
+//const __dirname = dirname(fileURLToPath(import.meta.url));
+
+//app.use('/js', express.static(path.join(__dirname, '/src/public/js')));
+
 //router 받아오기
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+//url을 통해 전달되는 데이터에 한글, 공백 등과 같은 문자가 포함될 경우 제대로 인식되지 않는 문제 해결
 app.use("/", home); //use -> 미들 웨어를 등록해주는 메서드
 
 module.exports = app;
+
+// "use strict";
+
+// // 모듈
+// const express = require("express");
+// const cors = require("cors");
+// const {dirname} = require('path');
+// const { fileURLToPath } = require("url");
+// const bodyParser = require("body-parser");
+
+// const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// const app = express();
+// app.use(cors());
+
+// // 모듈
+// import home from "./src/routes/home/index.js";
+// // ./src/routes/home/index.js
+
+// // 앱 세팅
+// app.set("views", "./app/src/views");
+// app.set("view engine", "ejs");
+// app.use('/js', express.static(path.join(__dirname, '/src/public/js')));
+// app.use(bodyParser.json());
+// // URL을 통해 전달되는 데이터에 한글, 공백 등과 같은 문자가 포함될 경우 제대로 인식되지 않는 문제 해결
+// app.use(bodyParser.urlencoded({extended: true}));
+
+// // use -> 미들 웨어를 등록해주는 메서드
+// app.use("/", home);
+
+// export default app;
