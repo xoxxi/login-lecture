@@ -4,21 +4,27 @@
 
 
 const id = document.querySelector("#id");
+const name = document.querySelector("#name");
 const password = document.querySelector("#password");
+const confirmPassword = document.querySelector("#confirm-password");
 console.log(id); // id 요소가 제대로 선택되었는지 확인
 console.log(password); // password 요소가 제대로 선택되었는지 확인
 
-const loginBtn = document.querySelector("#button");
 
-loginBtn.addEventListener("click", login);
+const registerBtn = document.querySelector("#button");
 
-function login() {
+registerBtn.addEventListener("click",register);
+
+function register() {
     const req = {
-        id: id.value,
-        password: password.value
+        id: id.value, 
+        name: name.value,
+        password: password.value,
+        confirmPassword: confirmPassword.value,
     };
+    console.log(req);
 
-    fetch("/login", {
+    fetch("/register", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -28,17 +34,17 @@ function login() {
     .then((res) => res.json())
     .then((res) => {
         if (res.success) {
-            location.href = "/";
+            location.href = "/login";
         }   else {
             alert(res.msg);
         }
     })
     .catch((err) => {
-        console.error("로그인 중 에러 발생");    
+        console.error("회원가입 중 에러 발생");    
     }); 
 }
 
 //오브젝트로 전달할 떄는 : 씀
 
 //질의선택자 선택자로 html의 값을 가져올 수있음
-//login.ejs 파일에 있는 tag들에 있는 정보 = 선택자 
+//register.ejs 파일에 있는 tag들에 있는 정보 = 선택자 
